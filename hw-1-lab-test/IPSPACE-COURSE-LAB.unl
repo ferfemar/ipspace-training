@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<lab name="IPSPACE-COURSE-LAB" id="121dd609-52d2-496e-912f-248c7d112fd3" version="1" scripttimeout="300" lock="0" author="Martin Ferfecky">
+    <description>Building Network Automation Solutions IPSpace Course Lab Assigment</description>
+    <topology>
+        <nodes>
+            <node id="1" name="vMX1" type="qemu" template="vmx" image="vmx-14.1.R1" console="telnet" cpu="1" cpulimit="0" ram="2048" ethernet="6" uuid="9481ea4b-3b12-4d58-ba6e-858418ecc22e" delay="0" icon="JuniperMX.png" config="0" left="516" top="249">
+                <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="1"/>
+            </node>
+            <node id="2" name="vMX2" type="qemu" template="vmx" image="vmx-14.1.R1" console="telnet" cpu="1" cpulimit="0" ram="2048" ethernet="6" uuid="79e396d2-9149-4159-9e39-018bc32df43c" delay="0" icon="JuniperMX.png" config="0" left="636" top="249">
+                <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="1"/>
+            </node>
+            <node id="3" name="vMX3" type="qemu" template="vmx" image="vmx-14.1.R1" console="telnet" cpu="1" cpulimit="0" ram="2048" ethernet="6" uuid="df54224a-2291-4a27-b0cb-372eaff6c04c" delay="0" icon="JuniperMX.png" config="0" left="777" top="243">
+                <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="1"/>
+            </node>
+            <node id="4" name="vMX4" type="qemu" template="vmx" image="vmx-14.1.R1" console="telnet" cpu="1" cpulimit="0" ram="2048" ethernet="6" uuid="2e9fdf9b-31bc-41ef-9da7-fd2e9715844c" delay="0" icon="JuniperMX.png" config="0" left="921" top="252">
+                <interface id="2" name="em2 / ge-0/0/0" type="ethernet" network_id="1"/>
+            </node>
+            <node id="5" name="R5" type="iol" template="iol" image="i86bi-linux-l2-adventerprise-15.1b.bin" ethernet="1" nvram="1024" ram="1024" serial="0" console="" delay="0" icon="Router.png" config="0" left="735" top="588">
+                <interface id="0" name="e0/0" type="ethernet" network_id="1"/>
+                <interface id="16" name="e0/1" type="ethernet" network_id="2"/>
+            </node>
+        </nodes>
+        <networks>
+            <network id="1" type="bridge" name="IC-BRIDGE" left="729" top="441" visibility="1"/>
+            <network id="2" type="pnet1" name="Net" left="735" top="720" visibility="1"/>
+        </networks>
+    </topology>
+</lab>
