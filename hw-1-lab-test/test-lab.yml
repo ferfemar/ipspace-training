@@ -4,8 +4,7 @@
    tasks:
     - name: Gather Junos facts using core module
       junos_facts:
-      register: labfacts
     - name: Save to output to files for inspection
       copy:
-        content: "{{labfacts | to_nice_json}}"
+        content: "{{ansible_facts | to_nice_json}}"
         dest: "{{inventory_hostname}}_facts.txt"
