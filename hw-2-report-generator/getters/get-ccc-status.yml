@@ -1,0 +1,14 @@
+- name: Get CCC status
+  juniper_junos_table:
+    file: "op-table-ccc-status.yml"
+    path: "helpers/"
+    host: "{{ansible_host}}"
+  register: ccc
+  when: ansible_network_os in [ 'junos' ]
+
+- copy:
+    content: |
+     ccc:
+     {{ccc.resource|to_nice_yaml(indent=2)}}
+    dest: "outputs/{{inventory_hostname}}-ccc-status.yml"
+  when: ansible_network_os in [ 'junos' ] and ccc.resource[0] is defined

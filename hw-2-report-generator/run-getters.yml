@@ -1,0 +1,16 @@
+---
+ - name: Running getters and parsers
+   hosts: all
+   roles:
+    - Juniper.junos
+   vars:
+    get: all
+   tasks:
+    - include_tasks: "{{item}}"
+      with_fileglob: [ "getters/*.yml" ]
+      ignore_errors: true
+      when: get == 'all'
+    
+    - include_tasks: "getters/get-{{get}}.yml"
+      ignore_errors: true
+      when: get != 'all'

@@ -1,0 +1,18 @@
+TEST:
+    interfaces:
+        interface: {}
+    name: TEST
+    state:
+        route_distinguisher: ''
+    type: L3VRF
+default:
+    interfaces:
+        interface:
+            GigabitEthernet1: {}
+            GigabitEthernet2: {}
+            GigabitEthernet3: {}
+            GigabitEthernet4: {}
+    name: default
+    state:
+        route_distinguisher: ''
+    type: DEFAULT_INSTANCE

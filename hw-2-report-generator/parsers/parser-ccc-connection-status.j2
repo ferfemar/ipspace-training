@@ -1,0 +1,8 @@
+inventory_hostname,name,type,status
+{% for host, facts in allhosts|dictsort %}
+{% if facts['ccc'] is defined %}
+{% for connection in facts['ccc'] %}
+{{host}},{{connection['name'] }},{{connection['type'] }},{{connection['status']}}
+{% endfor %}
+{% endif %}
+{% endfor %}

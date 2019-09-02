@@ -1,0 +1,6 @@
+inventory_hostname,vendor,model,os_version
+CSR1,Cisco,CSR1000V,CSR1000V Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.3.6, RELEASE SOFTWARE (fc3)
+vMX1,Juniper,VMX,14.1R1.10
+vMX2,Juniper,VMX,14.1R1.10
+vMX3,Juniper,VMX,14.1R1.10
+vMX4,Juniper,VMX,14.1R1.10

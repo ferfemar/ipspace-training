@@ -1,0 +1,4 @@
+inventory_hostname,vendor,model,os_version
+{% for host, facts in allhosts|dictsort%}
+{{host}},{{facts['napalm_facts']['vendor'] }},{{facts['napalm_facts']['model'] }},{{facts['napalm_facts']['os_version']}}
+{% endfor %}

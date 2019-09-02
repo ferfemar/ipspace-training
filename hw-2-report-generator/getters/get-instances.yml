@@ -1,0 +1,9 @@
+- name: Get NAPALM facts
+  napalm_get_facts:
+    provider: "{{napalm_provider}}"
+    dev_os: "{{ansible_network_os}}"
+    filter: ['network_instances']
+    
+- copy: 
+    content: "{{napalm_network_instances | to_nice_yaml }}"
+    dest: "outputs/{{inventory_hostname}}-instances.yml"
