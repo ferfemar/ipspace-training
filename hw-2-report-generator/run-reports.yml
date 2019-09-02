@@ -1,0 +1,7 @@
+---
+ - name: Running reports
+   hosts: all
+   tasks:
+    - include_tasks: "{{item}}"
+      with_fileglob: [ "parsers/*.yml" ]
+      ignore_errors: true

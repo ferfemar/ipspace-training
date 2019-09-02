@@ -1,0 +1,8 @@
+- name: Get NAPALM facts
+  napalm_get_facts:
+    provider: "{{napalm_provider}}"
+    dev_os: "{{ansible_network_os}}"
+    
+- copy: 
+    content: "{{napalm_facts | to_nice_yaml }}"
+    dest: "outputs/{{inventory_hostname}}-napalm-facts.yml"

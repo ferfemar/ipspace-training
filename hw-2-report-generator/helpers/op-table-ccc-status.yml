@@ -1,0 +1,12 @@
+---
+CCCTable:
+  rpc: get-ccc-information
+  item: ccc-connection
+  key: ccc-connection-name
+  view: CCCView
+
+CCCView:
+  fields:
+    name: ccc-connection-name
+    status: ccc-connection-status
+    type: ccc-connection-type

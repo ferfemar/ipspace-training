@@ -1,0 +1,7 @@
+ccc:
+- name: TEST
+  status: Dn
+  type: rmt-if
+- name: TEST2
+  status: Dn
+  type: rmt-if

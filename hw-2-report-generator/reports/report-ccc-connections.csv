@@ -1,0 +1,4 @@
+inventory_hostname,name,type,status
+vMX1,TEST,rmt-if,Dn
+vMX1,TEST2,rmt-if,Dn
+vMX2,TEST,rmt-if,Dn

@@ -1,0 +1,10 @@
+- include_vars:
+   file: "outputs/{{inventory_hostname}}-instances.yml"
+   name: napalm_instances
+  ignore_errors: true
+- template:
+   src: parsers/parser-instances.j2
+   dest: reports/report-instances.csv
+  vars:
+    allhosts: "{{hostvars}}"
+  run_once: true

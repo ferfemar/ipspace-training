@@ -1,0 +1,9 @@
+- include_vars:
+   file: "outputs/{{inventory_hostname}}-ccc-status.yml"
+  ignore_errors: true
+- template:
+   src: parsers/parser-ccc-connection-status.j2
+   dest: reports/report-ccc-connections.csv
+  vars:
+    allhosts: "{{hostvars}}"
+  run_once: true
