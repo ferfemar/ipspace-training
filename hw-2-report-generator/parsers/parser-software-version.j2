@@ -1,4 +1,6 @@
 inventory_hostname,vendor,model,os_version
-{% for host, facts in allhosts|dictsort%}
-{{host}},{{facts['napalm_facts']['vendor'] }},{{facts['napalm_facts']['model'] }},{{facts['napalm_facts']['os_version']}}
+{% for host in ansible_play_hosts_all %}
+{% if hostvars[host]['napalm_facts'] is defined %}
+{{host}},{{hostvars[host]['napalm_facts']['vendor'] }},{{hostvars[host]['napalm_facts']['model'] }},{{hostvars[host]['napalm_facts']['os_version']}}
+{% endif %}
 {% endfor %}

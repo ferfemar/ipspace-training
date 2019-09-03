@@ -1,7 +1,7 @@
 inventory_hostname,name,type,status
-{% for host, facts in allhosts|dictsort %}
-{% if facts['ccc'] is defined %}
-{% for connection in facts['ccc'] %}
+{% for host in ansible_play_hosts_all %}
+{% if hostvars[host]['ccc'] is defined %}
+{% for connection in hostvars[host]['ccc'] %}
 {{host}},{{connection['name'] }},{{connection['type'] }},{{connection['status']}}
 {% endfor %}
 {% endif %}
