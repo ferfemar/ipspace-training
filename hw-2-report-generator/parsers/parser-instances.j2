@@ -1,7 +1,7 @@
 inventory_hostname,name,type,
-{% for host, facts in allhosts|dictsort %}
-{% if facts['napalm_instances'] is defined %}
-{% for instance, instance_details in facts['napalm_instances'].items() if instance != "default" %}
+{% for host in ansible_play_hosts_all %}
+{% if hostvars[host]['napalm_instances'] is defined %}
+{% for instance, instance_details in hostvars[host]['napalm_instances'].items() if instance != "default" %}
 {{host}},{{instance_details['name']}},{{instance_details['type']}}
 {% endfor %}
 {% endif %}

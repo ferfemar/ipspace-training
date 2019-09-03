@@ -1,9 +1,11 @@
 - include_vars:
    file: "outputs/{{inventory_hostname}}-napalm-facts.yml"
    name: napalm_facts
+  ignore_errors: true
+  delegate_to: localhost
 - template:
    src: parsers/parser-software-version.j2
    dest: reports/report-software-version.csv
-  vars:
-    allhosts: "{{hostvars}}"
   run_once: true
+  ignore_errors: true
+  delegate_to: localhost
