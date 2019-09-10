@@ -1,0 +1,23 @@
+---
+nodes:
+{% for node in nodes %}
+    {{node.name}}:
+        mgmt: {{node.mgmt}}
+        rid: {{node.rid}}
+        asn: {{network.asn}}
+{%  if node.name in network.rr %}
+        rr: true
+{%  endif %}
+        ibgp:
+{%  for rr in network.rr %}
+{%      set neighbor = nodes|selectattr('name','equalto',rr)|first %}
+        - name: {{neighbor.name}}
+          rid: {{neighbor.rid}}
+{%  endfor %}
+        links:
+{%-  set links = fabric|selectattr(node.name,'defined')|list %}        
+{%  for link in links %}
+        - {{ link[node.name] }}
+{%  endfor %}
+
+{% endfor %}
