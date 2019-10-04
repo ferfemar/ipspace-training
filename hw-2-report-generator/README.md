@@ -10,8 +10,8 @@ Simple multi-platform reporting framework created as second hands-on assigment. 
 * **outputs** - output from devices saved in files
 * **parsers** - tasks and templates used to process the information into reports
 * **reports** - produced reports
-* **run-getters.yml** - playbook tu run the getters
-* **run-reports.yml**- playbook tu produce the reports
+* **run-getters.yml** - playbook to run the getters
+* **run-reports.yml**- playbook to produce the reports
 
 ## Functions
 
@@ -36,17 +36,25 @@ ansible-playbook run-getters.yml -e get=napalm-facts
 ansible-playbook run-getters.yml -e get=ccc-status
 ```
 
+It is also possible now to run just a single report/parser using variable "parser", e.g.:
+```bash
+ansible-playbook run-reports.yml -e parser=isis-graph
+```
+
 ## Available getters
 
 * **get-ccc-status** - gathers information about Circuit cross-connect (P2P L2 MPLS VPN) from Juniper devices  using juniper_junos_tables module. Works only for Junos as there is probably no counterpart for this VPN in  IOS.
 * **get-instances** - gathers information about routing instances in the network using NAPALM
 * **get-napalm-facts** - gathers basic device facts using NAPALM
+* **get-isis-adj** - gathers info about ISIS neighbors using Junos Pyez OP tables for Juniper and ios_command + TextFSM for Cisco IOS.  
+
 
 ## Available reports
 
 * **report-ccc.csv** - report of all CCCs in the network and their status
 * **report-instances.csv** - report of all routing instances in the network and their status
 * **report-software-verions.csv** - report of software version information
+* **report-isis-graph.dot + .png** - graph of ISIS neighbors
 
 ## Known issues
 
