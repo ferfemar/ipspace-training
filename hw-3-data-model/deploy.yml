@@ -1,5 +1,5 @@
 ---
-- hosts: junos
+- hosts: all
   tasks:
   - name: Deploy configs
     napalm_install_config:

@@ -1,7 +1,7 @@
 ---
-- hosts: junos
+- hosts: all
   vars_files: [ nodes.yml ]
   tasks:
   - name: Create device configs
-    template: src=vMX.j2 dest=configs/{{inventory_hostname}}.conf
+    template: src={{platform}}.j2 dest=configs/{{inventory_hostname}}.conf
     delegate_to: localhost

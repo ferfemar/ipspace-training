@@ -20,6 +20,15 @@ fabric:
       ge-0/0/3.115: 172.16.115.1/24
     vMX5:
       ge-0/0/3.115: 172.16.115.5/24
+  - vMX1:
+      ge-0/0/3.116: 172.16.116.1/24
+    CSR1:
+      GigabitEthernet4.116: 172.16.116.6/24
+  - vMX2:
+      ge-0/0/3.127: 172.16.127.2/24
+    CSR2:
+      GigabitEthernet4.127: 172.16.127.7/24
+
 
 transits:
   # Internet sessions with other ASes
@@ -41,6 +50,10 @@ nodes:
     id: 4
   - name: vMX5
     id: 5
+  - name: CSR1
+    id: 6
+  - name: CSR2
+    id: 7
 
 network:
  asn: 65000
