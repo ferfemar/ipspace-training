@@ -1,0 +1,14 @@
+- include_vars:
+    file: "outputs/{{inventory_hostname}}-isis-adj.yml"
+    name: isis_information
+  ignore_errors: true
+  delegate_to: localhost
+- template:
+    src: parsers/parser-isis-graph.j2
+    dest: reports/report-isis-graph.dot
+  run_once: true
+  ignore_errors: true
+  delegate_to: localhost
+- shell: dot reports/report-isis-graph.dot -Tpng > reports/report-isis-graph.png
+  run_once: true
+  delegate_to: localhost

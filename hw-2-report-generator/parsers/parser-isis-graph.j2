@@ -1,0 +1,9 @@
+digraph network {
+{% for host in ansible_play_hosts_all | sort %}
+{% if hostvars[host]['isis_information'] is defined %}
+{% for adj in hostvars[host]['isis_information']['isis_adj'] | sort %}
+{{host}} -> {{ adj['system_name'] }}
+{% endfor %}
+{% endif %}
+{% endfor %}
+}

@@ -1,0 +1,16 @@
+digraph network {
+CSR1 -> vMX1
+CSR2 -> vMX2
+vMX1 -> CSR1
+vMX1 -> vMX2
+vMX1 -> vMX4
+vMX1 -> vMX5
+vMX2 -> CSR2
+vMX2 -> vMX1
+vMX2 -> vMX3
+vMX3 -> vMX2
+vMX3 -> vMX4
+vMX4 -> vMX1
+vMX4 -> vMX3
+vMX5 -> vMX1
+}

@@ -1,0 +1,27 @@
+- name: Get ISIS adj. table
+  juniper_junos_table:
+    file: "op-table-isis-adj.yml"
+    path: "helpers/"
+    host: "{{ansible_host}}"
+  register: isis_adj
+  when: ansible_network_os in [ 'junos' ]
+
+- name: Get ISIS adj. table
+  ios_command:
+    commands: "show isis neighbor"
+  register: isis_adj_ios
+  when: ansible_network_os in [ 'ios' ]
+
+- copy:
+    content: |
+     isis_adj:
+     {{isis_adj.resource|to_nice_yaml(indent=2)}}
+    dest: "outputs/{{inventory_hostname}}-isis-adj.yml"
+  when: ansible_network_os in [ 'junos' ] and isis_adj.resource is defined
+
+- copy:
+    content: |
+     isis_adj:
+     {{ isis_adj_ios.stdout[0] | parse_cli_textfsm('helpers/cisco_ios_show_isis_neighbors.template') | to_nice_yaml(indent=2)}}
+    dest: "outputs/{{inventory_hostname}}-isis-adj.yml"
+  when: ansible_network_os in [ 'ios' ]

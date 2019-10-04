@@ -1,7 +1,14 @@
 ---
- - name: Running reports
-   hosts: all
-   tasks:
+- name: Running reports
+  hosts: all
+  vars:
+    parser: all
+  tasks:
     - include_tasks: "{{item}}"
-      with_fileglob: [ "parsers/*.yml" ]
+      with_fileglob: ["parsers/*.yml"]
       ignore_errors: true
+      when: parser == 'all'
+
+    - include_tasks: "parsers/parser-{{parser}}.yml"
+      ignore_errors: true
+      when: parser != 'all'
