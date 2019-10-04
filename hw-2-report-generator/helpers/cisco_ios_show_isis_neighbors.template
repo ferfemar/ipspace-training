@@ -1,0 +1,10 @@
+Value system_name ((\d+.\d+.\d+)|\S+)
+Value level (L\d)
+Value interface_name (\S+)
+Value ip_address (\d+.\d+.\d+.\d+)
+Value adjacency_state (\S+)
+Value holdtime (\d+)
+Value circuit_id (\S+)
+
+Start
+  ^${system_name}\s+${level}\s+${interface_name}\s+${ip_address}\s+${adjacency_state}\s+${holdtime}\s+${circuit_id} -> Record

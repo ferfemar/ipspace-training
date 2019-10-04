@@ -1,6 +1,2 @@
 inventory_hostname,name,type,
-vMX3,test_vrf1,L3VRF
-vMX2,test_vrf1,L3VRF
-vMX1,vswitch1,virtual-switch
-vMX1,vrf1,L3VRF
 CSR1,TEST,L3VRF
