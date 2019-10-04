@@ -2,22 +2,51 @@
 nodes:
 {% for node in nodes %}
     {{node.name}}:
-        mgmt: {{node.mgmt}}
-        rid: {{node.rid}}
+        mgmt: 192.168.1.10{{node.id}}/24
+        mgmt_mac: 00:00:00:00:00:0{{node.id}}
+        rid: {{node.id}}.{{node.id}}.{{node.id}}.{{node.id}}
+        iso: 49.0001.0000.0000.000{{node.id}}.00
         asn: {{network.asn}}
 {%  if node.name in network.rr %}
         rr: true
+{%  else %}        
+        rr: false
+{%  endif %}
+{%  set trans = transits|selectattr('asbr','equalto',node.name)|list %}
+{%  if trans  %}
+        asbr: true
+        ebgp:
+{%  for t in trans %}        
+        - name: {{t.telco}}          
+          ip: {{t.telco_ip}}
+          asn: {{t.telco_asn}}
+{%  endfor %}
+{%  else %}        
+        asbr: false
 {%  endif %}
         ibgp:
+{%  if node.name in network.rr %}        
+{%  for n in nodes if n != node %}
+        - name: {{n.name}}
+          rid: {{node.id}}.{{node.id}}.{{node.id}}.{{node.id}}
+{%  endfor %}        
+{%  else %}
 {%  for rr in network.rr %}
 {%      set neighbor = nodes|selectattr('name','equalto',rr)|first %}
         - name: {{neighbor.name}}
-          rid: {{neighbor.rid}}
+          rid: {{neighbor.id}}.{{neighbor.id}}.{{neighbor.id}}.{{neighbor.id}}
 {%  endfor %}
+{%  endif %}
         links:
 {%-  set links = fabric|selectattr(node.name,'defined')|list %}        
 {%  for link in links %}
-        - {{ link[node.name] }}
+        - {{ link[node.name] | to_json }}
 {%  endfor %}
+        external_links:
+{%  if trans %}
+{%      for t in trans %}
+        - {"{{t['asbr_interface']}}": "{{t['asbr_ip']}}"}
+{%      endfor %}
+{%  endif %}       
 
 {% endfor %}

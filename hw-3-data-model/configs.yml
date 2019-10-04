@@ -4,3 +4,4 @@
   tasks:
   - name: Create device configs
     template: src=vMX.j2 dest=configs/{{inventory_hostname}}.conf
+    delegate_to: localhost

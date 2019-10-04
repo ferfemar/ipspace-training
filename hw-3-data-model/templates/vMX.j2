@@ -24,11 +24,164 @@ system {
     }
 }
 interfaces {
+    lo0 {
+        unit 0 {
+            family inet {
+                address {{node.rid}}/32;
+            }            
+            family iso {
+                address {{node.iso}};
+            }
+        }
+    }
     ge-0/0/0 {
+        mac {{node.mgmt_mac}};
         unit 0 {
             family inet {
                 address {{node.mgmt}};
             }
         }
     }
+{% for link in node.links %}
+{%  set ifd = link.keys()[0].split('.')[0] %}
+{%  set ifl = link.keys()[0].split('.')[1] %}
+    {{ifd}} {
+        mac {{node.mgmt_mac}};
+        flexible-vlan-tagging;
+        encapsulation flexible-ethernet-services;
+        unit {{ifl}} {
+            vlan-id {{ifl}};
+            family inet {
+                address {{link[link.keys()[0]]}};
+            }
+            family iso;
+{%  if not node.rr %}            
+            family mpls;
+{%  endif %}
+        }
+    }
+{% endfor %}
+{% if node.external_links %}
+{%  for link in node.external_links %}
+{%  set ifd = link.keys()[0].split('.')[0] %}
+{%  set ifl = link.keys()[0].split('.')[1] %}
+    {{ifd}} {
+        mac {{node.mgmt_mac}};
+        flexible-vlan-tagging;
+        encapsulation flexible-ethernet-services;
+        unit {{ifl}} {
+            vlan-id {{ifl}};
+            family inet {
+                address {{link[link.keys()[0]]}};
+            }
+        }
+    }
+{%  endfor %}
+{% endif %}
 }
+routing-options {
+{% if node.asbr %}
+    static {
+        route 0.0.0.0/0 {
+            discard;
+        }
+    }
+{% endif %}    
+    autonomous-system {{node.asn}};
+{% if node.rr %}
+    rib-groups {
+        inet0-to-inet3 {
+            import-rib [ inet.0 inet.3 ];
+        }
+    }
+{% endif %}
+}
+protocols {
+    lldp {
+        interface all;
+    }
+{% if not node.rr %}
+    mpls {
+{% for link in node.links %}
+        interface {{link.keys()[0]}};
+{% endfor %}         
+    }
+    ldp {
+{% for link in node.links %}
+        interface {{link.keys()[0]}};
+{% endfor %}          
+    }
+{% endif %}
+    isis {
+        interface lo0 {
+            level 1 disable;
+        }
+{% for link in node.links %}
+        interface {{link.keys()[0]}} {
+            level 1 disable;
+        }
+{% endfor %}        
+    }
+    bgp {
+{% if node.asbr %}
+        group ebgp {
+            type external;
+{%  for ext in node.ebgp %}            
+            neighbor {{ext.ip | ipaddr('address')}} {
+                peer-as {{ext.asn}};
+                description {{ext.name}};
+            }
+        }
+{%  endfor %}
+{% endif %}
+        group ibgp {
+{% if node.asbr %} 
+            export ASBR-TO-RR;
+{% endif %}          
+            type internal;
+            local-address {{node.rid}};
+            family inet {
+                unicast;
+            }
+            family inet-vpn {
+                unicast;
+            }
+{% if node.rr %}
+            cluster {{node.rid}};
+{% endif %}
+{% for n in node.ibgp if n.name != inventory_hostname %}            
+            neighbor {{n.rid}} {
+                description {{n.name}};
+            }
+{% endfor %}
+        }
+    }
+}
+{% if node.asbr %}
+policy-options {
+    policy-statement ASBR-TO-RR {
+        term default-v4 {
+            from {
+                protocol static;
+                route-filter 0.0.0.0/0 exact;
+            }
+            then {
+                next-hop self;
+                accept;
+            }
+        }
+        term inet-vpn {
+            from family inet-vpn;
+            then {
+                next-hop self;
+                accept;
+            }
+        }
+        term last {
+            then reject;
+        }        
+    }
+}
+{% endif %}
+
+

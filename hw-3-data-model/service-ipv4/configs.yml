@@ -1,0 +1,9 @@
+- name: Generate configurations for IPV4 Internet services
+  hosts: all
+  tasks:
+  - include_vars:
+      file: ../services-ipv4.yml
+      name: ipv4
+  - template: 
+      src: ipv4.j2
+      dest: "configs/{{inventory_hostname}}_ipv4.conf"
