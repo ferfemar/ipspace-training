@@ -1,5 +1,5 @@
-fqdn: vMX1
-hostname: vMX1
+fqdn: vMX5
+hostname: vMX5
 interface_list:
 - ge-0/0/0
 - lc-0/0/0
@@ -39,5 +39,5 @@ interface_list:
 model: VMX
 os_version: 14.1R1.10
 serial_number: None
-uptime: 687126
+uptime: 687137
 vendor: Juniper

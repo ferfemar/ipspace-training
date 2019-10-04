@@ -1,16 +1,16 @@
-fqdn: CSR1.lab
-hostname: CSR1
+fqdn: CSR2.lab
+hostname: CSR2
 interface_list:
 - GigabitEthernet1
 - GigabitEthernet2
 - GigabitEthernet3
 - GigabitEthernet4
 - GigabitEthernet4.100
-- GigabitEthernet4.116
+- GigabitEthernet4.127
 - Loopback0
 model: CSR1000V
 os_version: CSR1000V Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.3.6, RELEASE
     SOFTWARE (fc3)
-serial_number: 934DEHQUJJG
-uptime: 347340
+serial_number: 9QVXWB0KSYI
+uptime: 349680
 vendor: Cisco

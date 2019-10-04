@@ -16,6 +16,11 @@ default:
             ge-0/0/1: {}
             ge-0/0/2: {}
             ge-0/0/3: {}
+            ge-0/0/3.112: {}
+            ge-0/0/3.123: {}
+            ge-0/0/3.127: {}
+            ge-0/0/3.32767: {}
+            ge-0/0/3.999: {}
             ge-0/0/4: {}
             ge-0/0/5: {}
             ge-0/0/6: {}
@@ -28,6 +33,7 @@ default:
             lc-0/0/0: {}
             lc-0/0/0.32769: {}
             lo0: {}
+            lo0.0: {}
             lo0.16384: {}
             lo0.16385: {}
             lo0.32768: {}
@@ -47,10 +53,3 @@ default:
     state:
         route_distinguisher: ''
     type: DEFAULT_INSTANCE
-test_vrf1:
-    interfaces:
-        interface: {}
-    name: test_vrf1
-    state:
-        route_distinguisher: '1234:12'
-    type: L3VRF
