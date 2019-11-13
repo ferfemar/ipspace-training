@@ -1,0 +1,13 @@
+- name: Generate configurations for VPNv4 services
+  hosts: all
+  vars_files: [ ../nodes.yml ]
+  tasks:
+  - include_vars:
+      file: ../services-vpnv4.yml
+      name: vpnv4
+    run_once: true
+    delegate_to: localhost
+  - template: 
+      src: "vpnv4-{{ansible_network_os}}.j2"
+      dest: "../configs/{{inventory_hostname}}_vpnv4.conf"
+    delegate_to: localhost

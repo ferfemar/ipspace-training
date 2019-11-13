@@ -1,0 +1,13 @@
+# Internet services
+vMX4:
+ - customer: NETCUST1
+   location: PRAGUE 1
+   interface: ge-0/0/3.201
+   ip_p2p: 201.0.0.0/30
+   ip_routed: 201.1.0.0/24
+vMX2:
+ - customer: NETCUST2
+   location: PRAGUE 2
+   interface: ge-0/0/3.201
+   ip_p2p: 201.0.0.4/30
+   ip_routed: 201.1.2.0/24

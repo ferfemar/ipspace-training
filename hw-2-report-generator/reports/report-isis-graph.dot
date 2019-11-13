@@ -10,7 +10,7 @@ vMX2 -> vMX1
 vMX2 -> vMX3
 vMX3 -> vMX2
 vMX3 -> vMX4
-vMX4 -> vMX1
 vMX4 -> vMX3
+vMX4 -> vMX1
 vMX5 -> vMX1
 }
