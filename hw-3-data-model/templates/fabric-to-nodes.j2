@@ -26,16 +26,16 @@ nodes:
 {%  endif %}
         ibgp:
 {%  if node.name in network.rr %}        
-{%  for n in nodes if n != node %}
+{%      for n in nodes if n != node %}
         - name: {{n.name}}
-          rid: {{node.id}}.{{node.id}}.{{node.id}}.{{node.id}}
-{%  endfor %}        
+          rid: {{n.id}}.{{n.id}}.{{n.id}}.{{n.id}}
+{%       endfor %}        
 {%  else %}
-{%  for rr in network.rr %}
+{%      for rr in network.rr %}
 {%      set neighbor = nodes|selectattr('name','equalto',rr)|first %}
         - name: {{neighbor.name}}
           rid: {{neighbor.id}}.{{neighbor.id}}.{{neighbor.id}}.{{neighbor.id}}
-{%  endfor %}
+{%      endfor %}
 {%  endif %}
         links:
 {%-  set links = fabric|selectattr(node.name,'defined')|list %}        

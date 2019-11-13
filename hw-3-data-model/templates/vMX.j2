@@ -86,6 +86,11 @@ routing-options {
             discard;
         }
     }
+    static {
+        route 201.0.0.0/8 {
+            discard;
+        }
+    }
 {% endif %}    
     autonomous-system {{node.asn}};
 {% if node.rr %}
@@ -113,6 +118,9 @@ protocols {
     }
 {% endif %}
     isis {
+{% if node.rr %}
+        rib-group inet inet0-to-inet3;
+{% endif %}
         interface lo0 {
             level 1 disable;
         }
@@ -128,6 +136,7 @@ protocols {
             type external;
 {%  for ext in node.ebgp %}            
             neighbor {{ext.ip | ipaddr('address')}} {
+                export ASBR-TO-PEER;
                 peer-as {{ext.asn}};
                 description {{ext.name}};
             }
@@ -135,9 +144,9 @@ protocols {
 {%  endfor %}
 {% endif %}
         group ibgp {
-{% if node.asbr %} 
-            export ASBR-TO-RR;
-{% endif %}          
+{% if not node.rr %}
+            export EXP-BGP-RRv4;
+{% endif %}            
             type internal;
             local-address {{node.rid}};
             family inet {
@@ -159,11 +168,22 @@ protocols {
 }
 {% if node.asbr %}
 policy-options {
-    policy-statement ASBR-TO-RR {
+    policy-statement EXP-BGP-RRv4 {
         term default-v4 {
             from {
                 protocol static;
                 route-filter 0.0.0.0/0 exact;
+            }
+            then {
+                next-hop self;
+                accept;
+            }
+        }
+        term origin {
+            from {
+                protocol [ direct static bgp ];
+                rib inet.0;
+                route-filter 201.0.0.0/8 longer;
             }
             then {
                 next-hop self;
@@ -181,7 +201,39 @@ policy-options {
             then reject;
         }        
     }
+    policy-statement ASBR-TO-PEER {
+        term default-v4 {
+            from {
+                protocol static;
+                route-filter 201.0.0.0/8 exact;
+            }
+            then {
+                next-hop self;
+                accept;
+            }
+        }
+        term last {
+            then reject;
+        }        
+    }
+}
+{% elif not node.rr %}
+policy-options {
+    policy-statement EXP-BGP-RRv4 {
+        term origin {
+            from {
+                protocol [ direct static bgp ];
+                rib inet.0;
+                route-filter 201.0.0.0/8 orlonger;
+            }
+            then {
+                next-hop self;
+                accept;
+            }
+        }
+        term last {
+            then reject;
+        }
+    }
 }
 {% endif %}
-
-

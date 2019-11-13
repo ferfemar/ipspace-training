@@ -29,17 +29,17 @@ fabric:
     CSR2:
       GigabitEthernet4.127: 172.16.127.7/24
 
-
 transits:
   # Internet sessions with other ASes
   - asbr: vMX2
-    asbr_interface:  ge-0/0/3.999
+    asbr_interface: ge-0/0/3.999
     asbr_ip: 203.0.113.1/30
     telco: SUPERPROVIDER1
     telco_ip: 203.0.113.2/30
     telco_asn: 65001
 
 nodes:
+# List of nodes in the network
   - name: vMX1
     id: 1
   - name: vMX2
@@ -56,5 +56,6 @@ nodes:
     id: 7
 
 network:
- asn: 65000
- rr: [ vMX5 ]
+# Network wide parameters
+  asn: 65000
+  rr: [vMX5]

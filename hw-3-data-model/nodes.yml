@@ -96,17 +96,17 @@ nodes:
         ibgp:
         
         - name: vMX1
-          rid: 5.5.5.5
+          rid: 1.1.1.1
         - name: vMX2
-          rid: 5.5.5.5
+          rid: 2.2.2.2
         - name: vMX3
-          rid: 5.5.5.5
+          rid: 3.3.3.3
         - name: vMX4
-          rid: 5.5.5.5
+          rid: 4.4.4.4
         - name: CSR1
-          rid: 5.5.5.5
+          rid: 6.6.6.6
         - name: CSR2
-          rid: 5.5.5.5
+          rid: 7.7.7.7
         
         links:        
         - {"ge-0/0/3.115": "172.16.115.5/24"}

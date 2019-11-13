@@ -1,0 +1,17 @@
+vpncust1:
+  rd: 123
+  locations:
+    vMX4:
+      - address: PRAGUE 1
+        interface: ge-0/0/3.301
+        ip_p2p: 192.168.0.0/31
+        ip_routed: 10.0.0.0/24
+      - address: PRAGUE 2
+        interface: ge-0/0/3.302
+        ip_p2p: 192.168.0.4/31
+        ip_routed: 10.0.2.0/24
+    vMX1:
+      - address: PRAGUE 3
+        interface: ge-0/0/3.301
+        ip_p2p: 192.168.0.2/31
+        ip_routed: 10.0.1.0/24
