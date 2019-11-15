@@ -1,5 +1,6 @@
 vpncust1:
   rd: 123
+  as: 64445
   locations:
     vMX4:
       - address: PRAGUE 1

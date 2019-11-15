@@ -22,6 +22,13 @@ router bgp {{ nodes[inventory_hostname]['asn'] }}
  address-family ipv4 vrf {{ cust }}
   redistribute connected
   redistribute static
+{%  for location in vpn['locations'][inventory_hostname] %}
+  neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} remote-as {{ vpn.as }}
+  neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} description {{ location['address'] }}
+  neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} activate
+  neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} as-override
+  neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} soft-reconfiguration inbound
+{%   endfor %}
  exit-address-family
 {%  endif %}
 {% endfor %}
