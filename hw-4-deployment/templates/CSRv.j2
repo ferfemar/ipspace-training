@@ -1,0 +1,213 @@
+{% set node = nodes[inventory_hostname] %}
+version 16.3
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname {{inventory_hostname}}
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable password cisco
+!
+no aaa new-model
+clock timezone CET 2 0
+!
+!         
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name lab
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!         
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+diagnostic bootup level minimal
+archive
+ path flash:archive
+ write-memory
+!
+spanning-tree extend system-id
+!         
+!
+username root privilege 15 password 0 Cisco123
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+! 
+! 
+! 
+! 
+! 
+! 
+!
+!
+interface Loopback0
+ ip address {{node.rid}} 255.255.255.255
+!
+interface GigabitEthernet1
+ ip address {{node.mgmt | ipaddr('address')}} {{node.mgmt | ipaddr('netmask')}}
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ no ip address
+ negotiation auto
+!
+{% for link in node.links %}
+{%  set ifd = link.keys()[0].split('.')[0] %}
+{%  set ifl = link.keys()[0].split('.')[1] %}
+interface {{ifd}}.{{ifl}}
+ encapsulation dot1Q {{ifl}}
+ ip address {{link[link.keys()[0]] | ipaddr('address')}} {{link[link.keys()[0]] | ipaddr('netmask')}}
+ ip router isis 
+ mpls ip
+ isis circuit-type level-2-only
+!
+{% endfor %}
+!
+router isis
+ net {{node.iso}}
+ passive-interface Loopback0
+!
+router bgp {{ node.asn }}
+ bgp router-id {{node.rid}}
+{% for n in node.ibgp if n.name != inventory_hostname %}            
+ neighbor {{n.rid}} remote-as {{ node.asn }}
+ neighbor {{n.rid}} description {{n.name}}
+ neighbor {{n.rid}} update-source Loopback0
+{% endfor %}
+ !
+ address-family ipv4
+  redistribute connected route-map EXP-BGP-RRv4
+{% for n in node.ibgp if n.name != inventory_hostname %}            
+  neighbor {{n.rid}} activate
+{% endfor %}
+ exit-address-family
+!
+ address-family vpnv4
+{% for n in node.ibgp if n.name != inventory_hostname %}            
+  neighbor {{n.rid}} activate
+  neighbor {{n.rid}} send-community extended
+  neighbor {{n.rid}} next-hop-self
+{% endfor %}
+ exit-address-family
+!
+virtual-service csr_mgmt
+!         
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+ip ssh version 2
+ip scp server enable
+!
+!
+!
+ip prefix-list PFX-CONNECTED-SUBNETS-INET seq 10 permit 201.0.0.0/8 ge 32
+ip sla responder
+!
+!
+route-map EXP-BGP-RRv4 permit 10
+ match ip address prefix-list PFX-CONNECTED-SUBNETS-INET
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!         
+!
+line con 0
+ stopbits 1
+line vty 0
+ login local
+line vty 1
+ login local
+ length 0
+line vty 2 4
+ login local
+!
+ntp server 192.168.1.2
+wsma agent exec
+!
+wsma agent config
+!
+wsma agent filesys
+!
+wsma agent notify
+!
+!
+end
