@@ -9,8 +9,24 @@ routing-instances {
         vrf-import {{ cust }}-import;
         vrf-export {{ cust }}-export;
 {%  for location in vpn['locations'][inventory_hostname] %}
-        interface {{ location.interface }};
+        interface {{ location.interface }};        
 {%  endfor %}
+        protocols {
+            bgp {
+                group CE {
+                    family inet {
+                        unicast;
+                    }
+                    peer-as {{ vpn.as }};
+                    as-override;
+{%  for location in vpn['locations'][inventory_hostname] %}
+                    neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} { 
+                        description "{{ location['address'] }}";
+                    }                    
+{%   endfor %}
+                }
+            }
+        }
     }
 }
 policy-options {
