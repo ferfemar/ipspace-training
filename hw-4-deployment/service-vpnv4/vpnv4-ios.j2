@@ -1,0 +1,27 @@
+{% for cust,vpn in vpnv4 | dictsort %}
+{%  if inventory_hostname in vpn.locations %}
+vrf definition {{ cust }}
+ description {{ cust }}-L3VPN
+ rd {{ nodes[inventory_hostname]['rid'] }}:{{ vpn.rd }}
+ !
+ address-family ipv4
+  route-target export {{ nodes[inventory_hostname]['asn'] }}:{{ vpn.rd }}
+  route-target import {{ nodes[inventory_hostname]['asn'] }}:{{ vpn.rd }}
+  route-target import {{ nodes[inventory_hostname]['asn'] }}:1
+ exit-address-family
+!
+{%  for location in vpn['locations'][inventory_hostname] %}
+interface {{ location['interface'] }}
+{%   set ifl = location['interface'].split('.')[1] %}
+ encapsulation dot1Q {{ ifl }}
+ vrf forwarding {{ cust }}
+ ip address {{ location['ip_p2p'] | ipaddr('first_usable') }} {{ location['ip_p2p'] | ipaddr('netmask') }} 
+{%   endfor %}
+!
+router bgp {{ nodes[inventory_hostname]['asn'] }}
+ address-family ipv4 vrf {{ cust }}
+  redistribute connected
+  redistribute static
+ exit-address-family
+{%  endif %}
+{% endfor %}
