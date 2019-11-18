@@ -1,0 +1,8 @@
+isis_adj:
+- adjacency_state: Up
+  circuit_id: vMX5.02
+  holdtime: '21'
+  interface_name: ge-0/0/3.115
+  ip_address: 172.16.115.1
+  level: '2'
+  system_name: vMX1
