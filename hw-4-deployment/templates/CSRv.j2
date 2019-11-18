@@ -146,6 +146,7 @@ router bgp {{ node.asn }}
  !
  address-family ipv4
   redistribute connected route-map EXP-BGP-RRv4
+  redistribute static route-map EXP-BGP-RRv4
 {% for n in node.ibgp if n.name != inventory_hostname %}            
   neighbor {{n.rid}} activate
 {% endfor %}
@@ -170,7 +171,7 @@ ip scp server enable
 !
 !
 !
-ip prefix-list PFX-CONNECTED-SUBNETS-INET seq 10 permit 201.0.0.0/8 ge 32
+ip prefix-list PFX-CONNECTED-SUBNETS-INET seq 10 permit 201.0.0.0/8 le 32
 ip sla responder
 !
 !

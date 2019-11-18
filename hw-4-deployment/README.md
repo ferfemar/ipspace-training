@@ -20,10 +20,10 @@ Building on data models from exercise # 3. Playbooks deploying service provider 
 * pb-fabric-to-nodes.yml - transforms fabric.yml data model into device specific nodes.yml data model
 * pb-configs.yml - generates infrastructure device configurations from the nodes.yml data model
 * pb-deploy.yml - deploys the infrastructure configuration data model to the devices
-* service-ipv4/pb-configs.yml - generates IPV4 Internet service configs (only basic Juniper config at this stage)
-* service-ipv4/pb-deploy-ipv4.yml - deploys IPV4 Internet service configs (only basic Juniper config at this stage)
-* service-vpnv4/pb-configs.yml - generates L3 MPLS VPN service configs (only basic Juniper config at this stage)
-* service-vpnv4/pb-deploy-vpnv4.yml - deploys L3 MPLS VPN service configs (only basic Juniper config at this stage)
+* service-ipv4/pb-configs.yml - generates IPV4 Internet service configs
+* service-ipv4/pb-deploy-ipv4.yml - deploys IPV4 Internet service configs
+* service-vpnv4/pb-configs.yml - generates L3 MPLS VPN service configs
+* service-vpnv4/pb-deploy-vpnv4.yml - deploys L3 MPLS VPN service configs
 * validations/pb-validate-infra.yml - runs infrastructure validations
 
 ## Things to be improved / todo list
