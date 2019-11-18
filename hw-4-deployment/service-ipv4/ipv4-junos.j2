@@ -13,5 +13,10 @@ interfaces {
         }
     }
 }
+routing-options {
+    static {
+        route {{ service.ip_routed | ipaddr('network') }}/{{ service.ip_routed | ipaddr('prefix') }} next-hop {{ service.ip_p2p | ipaddr('last_usable') }} 
+    }
+}
 {%  endfor %}
 {% endfor %}
