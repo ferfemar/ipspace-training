@@ -1,0 +1,10 @@
+- file:
+   path: ../outputs
+   state: absent
+  run_once: true
+  delegate_to: localhost
+- file:
+   path: ../outputs
+   state: directory
+  run_once: true
+  delegate_to: localhost

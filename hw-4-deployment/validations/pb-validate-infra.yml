@@ -4,11 +4,8 @@
    roles:
     - Juniper.junos   
    tasks:
+    - include_tasks: ../helpers/outputs-cleanup.yml
     - include_tasks: ../getters/get-isis-adj.yml
-  
- - name: Infrastructure validations
-   hosts: all    
-   tasks:
     - include_vars: ../nodes.yml
     - include_vars: ../outputs/{{inventory_hostname}}-isis-adj.yml
     - set_fact: 

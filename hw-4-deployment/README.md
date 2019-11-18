@@ -1,10 +1,6 @@
-# Homework 3 - Data Models: Create a Service Data Model
+# Homework 4 - Deploy Network Services From a Data Model
 
-First data model exercise (homework 3) solution. Data models describing simple service provider infrastructure plus IPv4 (Internet) and L3 VPNv4 services. A set of playbooks for data model transformations, configuration generation and simple deployment to lab devices for verification.
-
-Inspired by <https://github.com/ipspace/MPLS-infrastructure>.
-
-This solution will be improved upon in the following homeworks.
+Building on data models from exercise # 3. Playbooks deploying service provider infrastructure plus IPv4 (Internet) and L3 VPNv4 services. 
 
 ## Data models
 
@@ -28,8 +24,10 @@ This solution will be improved upon in the following homeworks.
 * service-ipv4/pb-deploy-ipv4.yml - deploys IPV4 Internet service configs (only basic Juniper config at this stage)
 * service-vpnv4/pb-configs.yml - generates L3 MPLS VPN service configs (only basic Juniper config at this stage)
 * service-vpnv4/pb-deploy-vpnv4.yml - deploys L3 MPLS VPN service configs (only basic Juniper config at this stage)
+* validations/pb-validate-infra.yml - runs infrastructure validations
 
 ## Things to be improved / todo list
 
 * Multiplatform support for services (Cisco)
 * Make the configs more real world - routing protocols etc.
+* Validations: LLDP, BGP, enhanced ISIS
