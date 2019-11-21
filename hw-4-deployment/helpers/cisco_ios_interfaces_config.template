@@ -1,0 +1,8 @@
+Value Key name (\S+)
+Value address (\d+.\d+.\d+.\d+)
+Value mask (\d+.\d+.\d+.\d+)
+
+Start
+ ^interface -> Continue.Record
+ ^interface\s+${name}$$ 
+ ^\s+ip\s+address\s+${address}\s+${mask}

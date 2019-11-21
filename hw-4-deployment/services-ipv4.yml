@@ -5,15 +5,24 @@ vMX4:
    interface: ge-0/0/3.201
    ip_p2p: 201.0.0.0/30
    ip_routed: 201.1.0.0/24
+   service_id: INET-1234-S01
 vMX2:
  - customer: NETCUST2
    location: PRAGUE 2
    interface: ge-0/0/3.201
    ip_p2p: 201.0.0.4/30
    ip_routed: 201.1.2.0/24
+   service_id: INET-1235-S01
+#  - customer: NONEXIST
+#    location: PRAGUE 3
+#    interface: ge-0/0/3.202
+#    ip_p2p: 201.0.1.4/30
+#    ip_routed: 201.1.2.0/24
+#    service_id: INET-5555-S01
 CSR1:
  - customer: NETCUST3
    location: PRAGUE 3
    interface: GigabitEthernet4.202
    ip_p2p: 201.0.0.8/30
    ip_routed: 201.1.3.0/24
+   service_id: INET-1236-S01
