@@ -16,6 +16,10 @@ vpncust1:
         interface: ge-0/0/3.301
         ip_p2p: 192.168.0.2/31
         ip_routed: 10.0.1.0/24
+      - address: NOTPRESEMT
+        interface: ge-0/0/3.666
+        ip_p2p: 192.168.0.2/31
+        ip_routed: 10.0.1.0/24
     CSR1:
       - address: PRAGUE 4
         interface: GigabitEthernet4.303

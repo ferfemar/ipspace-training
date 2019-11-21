@@ -6,7 +6,8 @@ class FilterModule(object):
             # 'rekey_junos_interfaces': self.rekey_junos_interfaces,
             'normalize_xml': self.normalize_xml,
             'parse_junos_interfaces': self.parse_junos_interfaces,
-            'parse_cisco_interfaces': self.parse_cisco_interfaces
+            'parse_cisco_interfaces': self.parse_cisco_interfaces,
+            'vpn4_interfaces': self.vpn4_interfaces
         }
 
     def is_list(self, value):
@@ -102,3 +103,12 @@ class FilterModule(object):
             interfaces_dict[interface].pop('name')
 
         return interfaces_dict
+
+    def vpn4_interfaces(self, customers):      
+        from collections import defaultdict        
+        routers = defaultdict(list)
+        for customer in customers:
+            for router in customers[customer]['locations']:
+                for location in customers[customer]['locations'][router]:
+                    routers[router].append(location['interface'])
+        return dict(routers)

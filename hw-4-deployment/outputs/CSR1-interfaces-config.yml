@@ -10,5 +10,7 @@ GigabitEthernet4.116:
     address: 172.16.116.6/24
 GigabitEthernet4.202:
     address: 201.0.0.9/30
+GigabitEthernet4.303:
+    address: 192.168.0.6/31
 Loopback0:
     address: 6.6.6.6/32
