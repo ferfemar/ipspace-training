@@ -3,7 +3,7 @@ class FilterModule(object):
     def filters(self):
         return {
             'is_list': self.is_list,
-            'rekey_junos_interfaces': self.rekey_junos_interfaces,
+            # 'rekey_junos_interfaces': self.rekey_junos_interfaces,
             'normalize_xml': self.normalize_xml,
             'parse_junos_interfaces': self.parse_junos_interfaces,
             'parse_cisco_interfaces': self.parse_cisco_interfaces
@@ -12,16 +12,19 @@ class FilterModule(object):
     def is_list(self, value):
         return isinstance(value, list)
 
-    def rekey_junos_interfaces(self, interfaces_xml):
-        import jxmlease
-        interfaces_dict = jxmlease.parse(interfaces_xml)
-        for interface in interfaces_dict['configuration']['interfaces']['interface']:
-            interface['unit'].jdict(in_place=True)
-        interfaces_dict['configuration']['interfaces']['interface'].jdict(
-            in_place=True)
-        return interfaces_dict
+    # def rekey_junos_interfaces(self, interfaces_xml):
+    #     import jxmlease
+    #     interfaces_dict = jxmlease.parse(interfaces_xml)
+    #     for interface in interfaces_dict['configuration']['interfaces']['interface']:
+    #         interface['unit'].jdict(in_place=True)
+    #     interfaces_dict['configuration']['interfaces']['interface'].jdict(
+    #         in_place=True)
+    #     return interfaces_dict
 
     def normalize_xml(self, xml_string):
+        """ Takes XML document as string and strips whitespaces.
+        Returnes the normalized XML document as string.
+        """
         from lxml import etree
         normalize_xslt = etree.XML('''\
         <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
@@ -54,6 +57,9 @@ class FilterModule(object):
         return str(result)
 
     def parse_junos_interfaces(self, interfaces_xml):
+        """Transform Juniper XML interfaces configuration blob 
+        into a YAML file for interface.unit lookups
+        """
         from lxml import etree
         template = etree.XML("""
         <xsl:stylesheet version="1.0"
@@ -80,6 +86,9 @@ class FilterModule(object):
         return str(result)
 
     def parse_cisco_interfaces(self, interfaces_list):
+        """Transform Cisco configuration blob (interfaces)
+        into a YAML file for interface.unit lookups
+        """
         from netaddr import IPAddress
         interfaces_dict = {interface['name']: interface for interface in interfaces_list}
         for interface in interfaces_dict:
