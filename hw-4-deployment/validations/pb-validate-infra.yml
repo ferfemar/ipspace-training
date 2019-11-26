@@ -1,0 +1,16 @@
+---
+ - name: Infrastructure validations
+   hosts: all
+   roles:
+    - Juniper.junos   
+   tasks:
+    - include_tasks: ../helpers/outputs-cleanup.yml
+    - include_tasks: ../getters/get-isis-adj.yml
+    - include_vars: ../nodes.yml
+    - include_vars: ../outputs/{{inventory_hostname}}-isis-adj.yml
+    - set_fact: 
+        isis_adj_list: "{{isis_adj | map(attribute='system_name') | list }}"
+    - assert:
+       that: isis_adj_list | length == nodes[inventory_hostname]['links'] | length 
+       msg: >
+        ISIS adjacency not found on one or more core interfaces.

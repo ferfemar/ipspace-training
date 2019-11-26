@@ -1,0 +1,12 @@
+GigabitEthernet1:
+    address: 192.168.1.107/24
+GigabitEthernet2:
+    address: ''
+GigabitEthernet3:
+    address: ''
+GigabitEthernet4:
+    address: ''
+GigabitEthernet4.127:
+    address: 172.16.127.7/24
+Loopback0:
+    address: 7.7.7.7/32

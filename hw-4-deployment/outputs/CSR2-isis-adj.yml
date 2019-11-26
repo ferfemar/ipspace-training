@@ -1,0 +1,8 @@
+isis_adj:
+- adjacency_state: UP
+  circuit_id: CSR2.01
+  holdtime: '25'
+  interface_name: Gi4.127
+  ip_address: 172.16.127.2
+  level: L2
+  system_name: vMX2

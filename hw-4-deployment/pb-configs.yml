@@ -1,0 +1,7 @@
+---
+- hosts: all
+  vars_files: [ nodes.yml ]
+  tasks:
+  - name: Create device configs
+    template: src={{platform}}.j2 dest=configs/{{inventory_hostname}}.conf
+    delegate_to: localhost
