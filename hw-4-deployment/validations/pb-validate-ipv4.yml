@@ -3,14 +3,10 @@
   hosts: all
   roles:
    - Juniper.junos
-  #  vars:
-  #   target_service: all
   tasks:
     - block:
         - set_fact:
             ipv4_services: "{{lookup('file', '../services-ipv4.yml') | from_yaml }}"
-        # - debug:
-            # msg: "{{ipv4_services}}"
       delegate_to: localhost
       run_once: true
     - include_tasks: "../getters/get-interfaces-config.yml"

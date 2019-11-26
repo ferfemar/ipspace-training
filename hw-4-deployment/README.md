@@ -1,6 +1,11 @@
 # Homework 4 - Deploy Network Services From a Data Model
 
-Building on data models from exercise # 3. Playbooks deploying service provider infrastructure plus IPv4 (Internet) and L3 VPNv4 services. 
+Building on data models from exercise # 3. Playbooks deploying service provider infrastructure plus IPv4 (Internet) and L3 VPNv4 services.
+
+Improvements highlights from HW3:
+
+* Basic service deployment now works for both Cisco and Juniper platforms and includes a routing protocol (BGP for VPNv4, static for IPv4).
+* Basic validation playbooks for fabric and services
 
 ## Data models
 
@@ -25,9 +30,14 @@ Building on data models from exercise # 3. Playbooks deploying service provider 
 * service-vpnv4/pb-configs.yml - generates L3 MPLS VPN service configs
 * service-vpnv4/pb-deploy-vpnv4.yml - deploys L3 MPLS VPN service configs
 * validations/pb-validate-infra.yml - runs infrastructure validations
+* validations/pb-validate-ipv4.yml - runs IPv4 services validations
+* validations/pb-validate-vpnv4.yml - runs VPNv4 services validations
 
 ## Things to be improved / todo list
 
-* Multiplatform support for services (Cisco)
+* Implement incremental service deployment and removal
+* Implement sanity checks before services are deployed
+* Report extraneous services
 * Make the configs more real world - routing protocols etc.
-* Validations: LLDP, BGP, enhanced ISIS
+* More validations: LLDP, BGP, enhanced ISIS
+* BUG: Service deployment task fails for Cisco device when no services are present for that device

@@ -8,7 +8,7 @@ isis_adj:
   system_name: vMX1
 - adjacency_state: Up
   circuit_id: vMX4.02
-  holdtime: '20'
+  holdtime: '21'
   interface_name: ge-0/0/3.134
   ip_address: 172.16.134.3
   level: '2'

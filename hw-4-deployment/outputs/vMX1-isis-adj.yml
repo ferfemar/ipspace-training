@@ -1,7 +1,7 @@
 isis_adj:
 - adjacency_state: Up
   circuit_id: vMX2.02
-  holdtime: '8'
+  holdtime: '6'
   interface_name: ge-0/0/3.112
   ip_address: 172.16.112.2
   level: '2'
