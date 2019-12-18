@@ -1,0 +1,38 @@
+{
+    "napalm_facts": {
+        "fqdn": "CSR1.lab",
+        "hostname": "CSR1",
+        "interface_list": [
+            "GigabitEthernet1",
+            "GigabitEthernet2",
+            "GigabitEthernet3",
+            "GigabitEthernet4",
+            "GigabitEthernet4.116",
+            "GigabitEthernet4.202",
+            "GigabitEthernet4.303",
+            "Loopback0"
+        ],
+        "model": "CSR1000V",
+        "os_version": "CSR1000V Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.3.6, RELEASE SOFTWARE (fc3)",
+        "serial_number": "934DEHQUJJG",
+        "uptime": 1080,
+        "vendor": "Cisco"
+    },
+    "napalm_fqdn": "CSR1.lab",
+    "napalm_hostname": "CSR1",
+    "napalm_interface_list": [
+        "GigabitEthernet1",
+        "GigabitEthernet2",
+        "GigabitEthernet3",
+        "GigabitEthernet4",
+        "GigabitEthernet4.116",
+        "GigabitEthernet4.202",
+        "GigabitEthernet4.303",
+        "Loopback0"
+    ],
+    "napalm_model": "CSR1000V",
+    "napalm_os_version": "CSR1000V Software (X86_64_LINUX_IOSD-UNIVERSALK9-M), Version 16.3.6, RELEASE SOFTWARE (fc3)",
+    "napalm_serial_number": "934DEHQUJJG",
+    "napalm_uptime": 1080,
+    "napalm_vendor": "Cisco"
+}

@@ -1,7 +1,7 @@
 {
     "napalm_facts": {
-        "fqdn": "vMX4",
-        "hostname": "vMX4",
+        "fqdn": "vMX5",
+        "hostname": "vMX5",
         "interface_list": [
             "ge-0/0/0",
             "lc-0/0/0",
@@ -42,11 +42,11 @@
         "model": "VMX",
         "os_version": "14.1R1.10",
         "serial_number": "None",
-        "uptime": 1128,
+        "uptime": 1130,
         "vendor": "Juniper"
     },
-    "napalm_fqdn": "vMX4",
-    "napalm_hostname": "vMX4",
+    "napalm_fqdn": "vMX5",
+    "napalm_hostname": "vMX5",
     "napalm_interface_list": [
         "ge-0/0/0",
         "lc-0/0/0",
@@ -87,6 +87,6 @@
     "napalm_model": "VMX",
     "napalm_os_version": "14.1R1.10",
     "napalm_serial_number": "None",
-    "napalm_uptime": 1128,
+    "napalm_uptime": 1130,
     "napalm_vendor": "Juniper"
 }
