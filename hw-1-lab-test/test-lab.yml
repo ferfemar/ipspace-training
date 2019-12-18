@@ -1,9 +1,11 @@
 ---
  - name: Playbook that verifies connection to lab devices
-   hosts: junos
+   hosts: junos, ios
    tasks:
-    - name: Gather Junos facts using core module
-      junos_facts:
+    - name: Gather facts using NAPALM Get Facts module
+      napalm_get_facts:
+        provider: "{{ napalm_provider }}"
+
     - name: Save to output to files for inspection
       copy:
         content: "{{ansible_facts | to_nice_json}}"
