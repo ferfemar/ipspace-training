@@ -1,0 +1,22 @@
+{% for node, services in ipv4.items() if node == inventory_hostname %}
+{%  for service in services %}
+{%  set interface = service.interface.split('.')[0] %}
+{%  set vlan_id = service.interface.split('.')[1] %}
+interfaces {
+    {{ interface }} {
+        unit {{ vlan_id }} {
+        description "{{ service.customer }} {{ service.location }}";       
+        vlan-id {{ vlan_id }}
+            family inet {
+                address {{ service.ip_p2p | ipaddr('first_usable') }}/{{ service.ip_p2p | ipaddr('prefix') }};
+            }        
+        }
+    }
+}
+routing-options {
+    static {
+        route {{ service.ip_routed | ipaddr('network') }}/{{ service.ip_routed | ipaddr('prefix') }} next-hop {{ service.ip_p2p | ipaddr('last_usable') }} 
+    }
+}
+{%  endfor %}
+{% endfor %}

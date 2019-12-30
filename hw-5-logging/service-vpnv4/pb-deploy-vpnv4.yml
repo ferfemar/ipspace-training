@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+  - name: Deploy configs
+    napalm_install_config:
+        provider: "{{napalm_provider}}"
+        config_file: "configs/{{inventory_hostname}}_vpnv4.conf"
+        commit_changes: True
+        get_diffs: True
+        replace_config: False

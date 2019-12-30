@@ -1,0 +1,76 @@
+{% for cust,vpn in vpnv4 | dictsort %}
+{%  if inventory_hostname in vpn.locations %}
+
+routing-instances {
+    {{ cust }} {
+        instance-type vrf;
+        vrf-table-label;
+        route-distinguisher {{ nodes[inventory_hostname]['rid'] }}:{{ vpn.rd }};
+        vrf-import {{ cust }}-import;
+        vrf-export {{ cust }}-export;
+{%  for location in vpn['locations'][inventory_hostname] %}
+        interface {{ location.interface }};        
+{%  endfor %}
+        protocols {
+            bgp {
+                group CE {
+                    family inet {
+                        unicast;
+                    }
+                    peer-as {{ vpn.as }};
+                    as-override;
+{%  for location in vpn['locations'][inventory_hostname] %}
+                    neighbor {{ location['ip_p2p'] | ipaddr('last_usable') }} { 
+                        description "{{ location['address'] }}";
+                    }                    
+{%   endfor %}
+                }
+            }
+        }
+    }
+}
+policy-options {
+    policy-statement {{ cust }}-import {
+            term customer {
+                from {
+                    protocol bgp;
+                    community {{ cust }};
+                }
+                then accept;
+            }
+            term mgmt {
+                from {
+                    protocol bgp;
+                    community mgmt-station;
+                }
+                then accept;
+            }
+        }
+    policy-statement {{ cust }}-export {
+            term customer {
+                from protocol [ bgp direct ];
+                then {
+                    community add {{ cust }};
+                    accept;
+                }
+            }
+            term last {
+                then reject;
+            }
+        }
+    community {{ cust }} members target:{{ nodes[inventory_hostname]['asn'] }}:{{ vpn.rd }};
+    community mgmt-station members target:{{ nodes[inventory_hostname]['asn'] }}:1;
+}
+interfaces {
+{%  for location in vpn['locations'][inventory_hostname] %}
+{%  set ifl = location['interface'].split('.')[1] %}
+        {{ location['interface'] }} {
+            vlan-id {{ ifl }};
+            family inet {
+                address {{ location['ip_p2p'] | ipaddr('first_usable') }}/{{ location['ip_p2p'] | ipaddr('prefix') }};
+            }
+        }
+{%  endfor %}
+}
+{%  endif %}
+{% endfor %}

@@ -1,0 +1,26 @@
+- name: Get interfaces config
+  juniper_junos_config:
+    retrieve: "committed"
+    filter: "<configuration><interfaces></interfaces></configuration>"
+    format: xml
+  register: interfaces_config_junos
+  when: ansible_network_os in [ 'junos' ]
+
+- name: Get interfaces config
+  ios_command:
+    commands:
+     - "show run | s ^interface"
+  register: interfaces_config_ios
+  when: ansible_network_os in [ 'ios' ]
+
+- copy:
+    content: |
+     {{ interfaces_config_junos.config | normalize_xml | parse_junos_interfaces  }}
+    dest: "outputs/{{inventory_hostname}}-interfaces-config.yml"
+  when: ansible_network_os in [ 'junos' ] 
+
+- copy:
+    content: |
+     {{ interfaces_config_ios.stdout[0] | parse_cli_textfsm('helpers/cisco_ios_interfaces_config.template') | parse_cisco_interfaces | to_nice_yaml }}
+    dest: "outputs/{{inventory_hostname}}-interfaces-config.yml"
+  when: ansible_network_os in [ 'ios' ] 
