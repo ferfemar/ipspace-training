@@ -1,10 +1,32 @@
 ---
+- name: IMPORT> convert fabric data model to nodes data model
+  import_playbook: pb-fabric-to-nodes.yml
+
+- name: IMPORT> generate infra configs
+  import_playbook: pb-configs.yml
+
 - hosts: all
   tasks:
-  - name: Deploy configs
-    napalm_install_config:
-        provider: "{{napalm_provider}}"
-        config_file: "configs/{{inventory_hostname}}.conf"
-        commit_changes: True
-        get_diffs: True
-        replace_config: True
+    - name: INCLUDE> debugging settings
+      include: "enable-debug.yml"
+      vars:
+        printouts: "printouts"
+      delegate_to: localhost
+      run_once: true
+
+    - block:
+        - name: Deploy configs
+          napalm_install_config:
+            provider: "{{napalm_provider}}"
+            config_file: "configs/{{inventory_hostname}}.conf"
+            commit_changes: True
+            get_diffs: True
+            replace_config: True
+          register: deployment
+
+      always:
+        - name: Debug LOG output
+          local_action: >
+            copy content="{{ deployment | to_nice_json }}"
+                dest="{{ debug_output }}/{{ inventory_hostname }}-deploy-infra.json"
+          when: debug is defined

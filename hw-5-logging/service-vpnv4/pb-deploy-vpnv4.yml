@@ -1,10 +1,30 @@
 ---
-- hosts: all
+- name: IMPORT> generate VPNv4 service configs
+  import_playbook: pb-configs.yml
+
+- name: Deploy VPNv4 service configs
+  hosts: all
   tasks:
-  - name: Deploy configs
-    napalm_install_config:
-        provider: "{{napalm_provider}}"
-        config_file: "configs/{{inventory_hostname}}_vpnv4.conf"
-        commit_changes: True
-        get_diffs: True
-        replace_config: False
+    - name: INCLUDE> debugging settings
+      include: "../enable-debug.yml"
+      vars:
+        printouts: "../printouts"
+      delegate_to: localhost
+      run_once: true
+
+    - block:
+        - name: Deploy configs
+          napalm_install_config:
+            provider: "{{napalm_provider}}"
+            config_file: "configs/{{inventory_hostname}}_vpnv4.conf"
+            commit_changes: True
+            get_diffs: True
+            replace_config: False
+          register: deployment
+
+      always:
+        - name: Debug LOG output
+          local_action: >
+            copy content="{{ deployment | to_nice_json }}"
+                 dest="{{ debug_output }}/{{ inventory_hostname }}-deploy-vpn4-service.json"
+          when: debug is defined
