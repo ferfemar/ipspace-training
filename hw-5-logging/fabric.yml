@@ -1,3 +1,4 @@
+---
 fabric:
   # Core links
   - vMX1:
@@ -39,7 +40,7 @@ transits:
     telco_asn: 65001
 
 nodes:
-# List of nodes in the network
+  # List of nodes in the network
   - name: vMX1
     id: 1
   - name: vMX2
@@ -56,6 +57,6 @@ nodes:
     id: 7
 
 network:
-# Network wide parameters
+  # Network wide parameters
   asn: 65000
   rr: [vMX5]
