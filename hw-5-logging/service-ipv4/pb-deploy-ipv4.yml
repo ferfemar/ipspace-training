@@ -21,6 +21,7 @@
             get_diffs: True
             replace_config: False
           register: deployment
+          tags: [ print_action ]
 
       always:
         - name: Debug LOG output
