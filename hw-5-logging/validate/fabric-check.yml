@@ -1,0 +1,10 @@
+- name: Ensure every host in inventory is included in the fabric model
+  assert:
+   that: "inventory_hostname in fabric_model['nodes'] | map(attribute='name') | list"
+
+- name: Ensure every host in fabric model is in the inventory
+  assert:
+   that: "{{ item in groups['all'] }}"
+  loop: "{{ fabric_model['nodes'] | map(attribute='name') | list }}"
+  delegate_to: localhost
+  run_once: true

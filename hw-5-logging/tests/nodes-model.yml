@@ -1,0 +1,7 @@
+---
+- name: Test nodes model creation
+  hosts: localhost
+  vars_files: [ ../fabric.yml ]
+  tasks:
+  - name: Create per-node data model from fabric data model
+    template: src=../templates/fabric-to-nodes.j2 dest=../printouts/nodes.yml

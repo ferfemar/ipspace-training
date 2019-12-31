@@ -1,0 +1,64 @@
+---
+fabric:
+  # Core links
+  - vMX1:
+      ge-0/0/3.112: 172.16.112.1/24
+    vMX2:
+      ge-0/0/3.112: 172.16.112.2/24
+  - vMX2:
+      ge-0/0/3.123: 172.16.123.2/24
+    vMX3:
+      ge-0/0/3.123: 172.16.123.3/24
+  - vMX3:
+      ge-0/0/3.134: 172.16.134.3/24
+    vMX4:
+      ge-0/0/3.134: 172.16.134.4/24
+  - vMX1:
+      ge-0/0/3.114: 172.16.114.1/24
+    vMX4:
+      ge-0/0/3.114: 172.16.114.4/24
+  - vMX1:
+      ge-0/0/3.115: 172.16.115.1/24
+    vMX5:
+      ge-0/0/3.115: 172.16.115.5/24
+  - vMX1:
+      ge-0/0/3.116: 172.16.116.1/24
+    CSR1:
+      GigabitEthernet4.116: 172.16.116.6/24
+  - vMX2:
+      ge-0/0/3.127: 172.16.127.2/24
+    CSR2:
+      GigabitEthernet4.127: 172.16.127.7/24
+
+transits:
+  # Internet sessions with other ASes
+  - asbr: vMX2
+    asbr_interface: ge-0/0/3.999
+    asbr_ip: 203.0.113.1/30
+    telco: SUPERPROVIDER1
+    telco_ip: 203.0.113.2/30
+    telco_asn: 65001
+
+nodes:
+  # List of nodes in the network
+  - name: vMX1
+    id: 1
+  - name: vMX2
+    id: 2
+  - name: vMX3
+    id: 3
+  - name: vMX4
+    id: 4
+  - name: vMX5
+    id: 5
+  - name: CSR1
+    id: 6
+  - name: CSR2
+    id: 7
+  - name: XXX
+    id: 8
+
+network:
+  # Network wide parameters
+  asn: 65000
+  rr: [vMX5]

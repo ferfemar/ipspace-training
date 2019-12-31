@@ -1,0 +1,10 @@
+- hosts: all
+  tasks: 
+
+   - name: Load fabric data model
+     include_vars: 
+      file: "{{ fabric_model_path | default('../fabric.yml')}}"
+      name: fabric_model
+     run_once: true
+      
+   - include: ../validate/fabric-check.yml

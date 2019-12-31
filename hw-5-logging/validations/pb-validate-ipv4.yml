@@ -9,9 +9,12 @@
             ipv4_services: "{{lookup('file', '../services-ipv4.yml') | from_yaml }}"
       delegate_to: localhost
       run_once: true
+      
     - include_tasks: "../getters/get-interfaces-config.yml"
+
     - set_fact:
        interfaces: "{{lookup('file', '../outputs/{{inventory_hostname}}-interfaces-config.yml') | from_yaml }}"
+
     - name: Check if all services interfaces are present in the configs.
       assert:
        that: "item['interface'] in interfaces"
