@@ -1,0 +1,7 @@
+- name: Verify IP addresses
+  assert:
+    that: 
+     - "data['nodes'][inventory_hostname]['rid'] | ipaddr"     
+     - "data['nodes'][inventory_hostname]['mgmt'] | ipaddr"
+    fail_msg: "Must be valid IP address"
+    success_msg: IP address OK

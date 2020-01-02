@@ -1,10 +1,23 @@
-- hosts: all
-  tasks: 
+- hosts: localhost
+  tasks:
+    - name: YAMLLINT IT
+      shell: "yamllint {{ fabric_model_path | default('../fabric.yml') }}"
+      tags: lint
 
-   - name: Load fabric data model
-     include_vars: 
-      file: "{{ fabric_model_path | default('../fabric.yml')}}"
-      name: fabric_model
-     run_once: true
-      
-   - include: ../validate/fabric-check.yml
+- hosts: all
+  tasks:
+    - name: Load fabric data model
+      include_vars:
+        file: "{{ fabric_model_path | default('../fabric.yml')}}"
+      run_once: true
+
+    - name: Run node check on fabric data model
+      include: ../validate/predeploy-node-check.yml
+
+    - name: Generate per node data model
+      set_fact:
+        data: >
+          {{ lookup('template','../templates/fabric-to-nodes.j2') | from_yaml }}
+
+    - name: Run checks on the node data model
+      include: ../validate/predeploy-node-data-model-check.yml
